@@ -1,4 +1,14 @@
 ExpertSystem::Application.routes.draw do
+  get "users/show"
+
+  root :to => "home#index"
+
+  devise_for :users
+  resources :users, only: :show
+  authenticated :user do
+    root :to => 'home#index' #change it later
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
