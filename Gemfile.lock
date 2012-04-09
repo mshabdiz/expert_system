@@ -80,6 +80,11 @@ GEM
       factory_girl (~> 3.0.0)
       railties (>= 3.0.0)
     ffi (1.0.11)
+    formtastic (2.1.1)
+      actionpack (~> 3.0)
+    formtastic-bootstrap (1.1.1)
+      formtastic
+      rails (~> 3.1)
     gherkin (2.9.3)
       json (>= 1.4.6)
     hike (1.2.1)
@@ -186,6 +191,8 @@ DEPENDENCIES
   devise (>= 2.0.4)
   email_spec (>= 1.2.1)
   factory_girl_rails (>= 3.0.0)
+  formtastic
+  formtastic-bootstrap
   jquery-rails
   launchy (>= 2.1.0)
   pg
