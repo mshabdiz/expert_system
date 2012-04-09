@@ -1,4 +1,4 @@
-ExpertSystem::Application.routes.draw do
+ExpertSystemApp::Application.routes.draw do
   get "users/show"
 
   root :to => "home#index"

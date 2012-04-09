@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-ExpertSystem::Application.load_tasks
+ExpertSystemApp::Application.load_tasks
