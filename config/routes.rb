@@ -1,13 +1,18 @@
 ExpertSystemApp::Application.routes.draw do
-  get "users/show"
-
-  root :to => "home#index"
 
   devise_for :users
   resources :users, only: :show
   authenticated :user do
-    root :to => 'home#index' #change it later
+    root to: "static_pages#home"
   end
+  
+  resources :expert_systems, path: '/expert-systems', except: [:edit, :update] do
+    resources :diagnosed_objects, path: '/diagnosed-objects'
+  end
+
+  root to: "static_pages#home"
+
+  match '/about',  to: "static_pages#about"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

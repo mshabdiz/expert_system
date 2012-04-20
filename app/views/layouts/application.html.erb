@@ -1,33 +1,66 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expert system</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <%= stylesheet_link_tag    "application", :media => "all" %>
-	<!--[if IE 6]><%= stylesheet_link_tag 'ie6' %><![endif]-->
-	<!--[if IE 7]><%= stylesheet_link_tag 'ie7' %><![endif]-->	
-    <%= javascript_include_tag "application" %>
-    <%= csrf_meta_tags %>
-  </head>
-  <body class="<%= params[:controller] %>">
-    <div id="container" class="container">
-      <header>
-		<ul class="hmenu">
-		  <%= render 'shared/navigation' %>
-		</ul>
-        <%- flash.each do |name, msg| -%>
-          <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
-        <%- end -%>
-      </header>
-      <div id="main" role="main">
-        <%= yield %>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= full_title(yield(:title)) %></title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= render 'layouts/shim' %>
+  <%= csrf_meta_tags %>
+
+  <link href="images/favicon.ico" rel="shortcut icon">
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="/">Expert system</a>
+      <!-- Everything you want hidden at 940px or less, place within here -->
+      <div class="nav-collapse">
+        <!-- .nav, .navbar-search, .navbar-form, etc -->
+        <%= render 'shared/navigation' %>
       </div>
-      <footer>
-      </footer>
-    </div> <!--! end of #container -->
-  </body>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <header>
+    <%= render 'shared/flash_messages' %>
+    <h1><%= yield(:title) %></h1>
+  </header>
+  <div class="content">
+    <%= yield %>
+  </div><!--/content-->
+
+  <footer>
+    <p>Expert system &copy; 2012 by <a href="https://twitter.com/#!/AlexeevS">Sergey Alekseev</a></p>
+  </footer>
+
+  <%= debug(params) if Rails.env.development? %>
+
+</div> <!-- /container -->
+
+<!-- Javascripts
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<%= javascript_include_tag "application" %>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+        buttonsDisableLogic($('div.row.state').length,$('div.row.state:first').find('.fl.number').length);
+        fillBeefs();
+        fillStandards();
+        autoFill();
+    });
+</script>
+
+</body>
 </html>

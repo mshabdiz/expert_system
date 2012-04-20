@@ -1,0 +1,102 @@
+<%= semantic_form_for @expert_system, html: { class: "form-inline" } do |f| %>
+    <%= f.inputs html: { class: "control-group error" } do %>
+        <div class="control-group">
+          <%= f.input :name, :class => 'control-label' %>
+          <div class="row">
+            <div class="btn-toolbar" style="margin-top: 18px;">
+              <div class="span3">
+                <div class="btn-group">
+                  <button id="add" class="btn btn-success" onclick="addStandardRow();return false;">Add</button>
+                  <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a id="add_standard_row" onclick="addStandardRow();">Standard</a></li>
+                    <li><a id="add_diagnostic_variable" onclick="addDiagnosticVariable();">Diagnostic variable</a></li>
+                  </ul>
+                </div>
+                <div class="btn-group">
+                  <button id="remove" class="btn btn-danger" onclick="removeStandardRow();return false;">Remove</button>
+                  <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a id="remove_standard_row" onclick="removeStandardRow();">Standard</a></li>
+                    <li><a id="remove_diagnostic_variable" onclick="removeDiagnosticVariable();">Diagnostic variable</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="span7">
+                <div class="control-group" id="change-beefs" style="display: inline-block;">
+                  <!--<label class="control-label" for="beefs-input">Beefs:</label>-->
+                  <div class="controls">
+                    <input type="text" class="input-small" id="beefs-input">
+                    <button class="btn btn-warning" onclick="changeBeefs();return false;">
+                      Change
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="controls">
+            <div class="row form-header">
+              <div class="span3">
+                <h3>State</h3>
+              </div>
+              <div class="span7">
+                <% @expert_system.standards.first.diagnostic_variables.size.times do |index| %>
+                    <div class="span1 variable-number">
+                      <% if @expert_system.standards.first.diagnostic_variables[index].beef %>
+                          <% beef = "beef"  %>
+                      <% else  %>
+                          <% beef = ""  %>
+                      <% end %>
+                      <%= content_tag(:h3, index+1, class: "number #{beef}") %>
+                    </div>
+                <% end %>
+              </div>
+              <div class="span2">
+                <h3>Directive</h3>
+              </div>
+            </div>
+            <%= f.semantic_fields_for :standards do |standard| %>
+                <div class="row state">
+                  <%= standard.inputs do %>
+                      <div class="span3">
+                        <%= standard.input :name, label: false, input_html: { class: "span3" } %>
+                      </div>
+                      <div class="span7">
+                        <%= standard.inputs do %>
+                            <% index = 0 %>
+                            <%= standard.semantic_fields_for :diagnostic_variables do |diagnostic_variable| %>
+                                <% if @expert_system.standards.first.diagnostic_variables[index].beef %>
+                                    <% beef = "beef" %>
+                                <% else %>
+                                    <% beef = "" %>
+                                <% end %>
+                                <%= diagnostic_variable.input :value, label: false, in: 0..1, step: 0.1, input_html:
+                                        { class: "span1 variable #{beef}" }, :wrapper_html => { :class => 'fl' } %>
+                                <%= diagnostic_variable.input :beef, input_html:
+                                        { class: "beef-checkbox" }, :wrapper_html => { :style => "display:none;" } %>
+                                <% index += 1  %>
+                            <% end %>
+                        <% end %>
+                      </div>
+                      <div class="span2">
+                        <%= standard.semantic_fields_for :directive do |directive| %>
+                            <%= directive.input :name, label: false, input_html: { class: "span2" } %>
+                        <% end %>
+                      </div>
+                  <% end %>
+                </div>
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  expert_systems_path, :class => 'btn' %>
+    </div>
+<% end %>

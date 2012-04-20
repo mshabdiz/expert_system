@@ -1,0 +1,42 @@
+<%- model_class = ExpertSystem.new.class -%>
+<%= provide(:title, t('helpers.titles.index', :model => model_class.model_name.human,
+                      :default => "#{model_class.model_name.human.pluralize}")) %>
+<% if @expert_systems.any? %>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:id) %></th>
+        <th><%= model_class.human_attribute_name(:name) %></th>
+        <th><%= model_class.human_attribute_name(:user_id) %></th>
+        <th><%= model_class.human_attribute_name(:created_at) %></th>
+        <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @expert_systems.each do |expert_system| %>
+          <tr>
+            <td><%= link_to expert_system.id, expert_system_path(expert_system) %></td>
+            <td><%= expert_system.name %></td>
+            <td><%= expert_system.user_id %></td>
+            <td><%=l expert_system.created_at %></td>
+            <td>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                          expert_system_path(expert_system),
+                          :method => :delete,
+                          :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
+                          :class => 'btn btn-mini btn-danger' %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <p>
+      Oh... You haven't any Expert systems yet. May be you want to create your first expert system? It's a great experience.
+      Let's try!
+    </p>
+<% end %>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_expert_system_path,
+            :class => 'btn btn-primary' %>

@@ -1,0 +1,9 @@
+form.formtastic fieldset span.help-inline { font-style: italic; font-size: 11px; }
+form.formtastic fieldset div.fl { float: left; margin-bottom: 5px; }
+form.formtastic fieldset div.fl .help-inline { display: none; }
+div .state { margin-top: 18px; }
+div .form-header { margin-top: 18px;  }
+div .variable-number { margin-left: 0px; }
+h3.number { padding-left: 30%; }
+.beef { color: red; }
+.fl { float: left; }

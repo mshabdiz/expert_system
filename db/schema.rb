@@ -11,7 +11,51 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120406153946) do
+ActiveRecord::Schema.define(:version => 20120409174206) do
+
+  create_table "diagnosed_objects", :force => true do |t|
+    t.string   "name"
+    t.string   "state"
+    t.string   "directive"
+    t.integer  "expert_system_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.boolean  "prefer_beef"
+  end
+
+  create_table "diagnostic_variables", :force => true do |t|
+    t.string   "name"
+    t.float    "value"
+    t.boolean  "beef",             :default => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.integer  "state_id"
+    t.integer  "diagnosable_id"
+    t.string   "diagnosable_type"
+  end
+
+  create_table "directives", :force => true do |t|
+    t.string   "name"
+    t.integer  "state_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "expert_systems", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "expert_systems", ["name"], :name => "index_expert_systems_on_name", :unique => true
+
+  create_table "states", :force => true do |t|
+    t.string   "name"
+    t.integer  "expert_system_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

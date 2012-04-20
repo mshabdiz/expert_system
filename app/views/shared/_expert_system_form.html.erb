@@ -1,0 +1,32 @@
+<%= semantic_form_for @expert_system do |f| %>
+    <%= f.inputs name: yield(:title) do %>
+        <%= f.input :name, input_html: { :size => 15 } %>
+        <%= f.semantic_fields_for :standards do |standard| %>
+            <div class="row">
+              <%= standard.inputs do %>
+                  <div class="span2">
+                    <%= standard.input :name, input_html: { :size => 10 } %>
+                  </div>
+                  <div class="span8">
+                    <%= standard.semantic_fields_for :diagnostic_variables do |diagnostic_variable| %>
+                        <%= diagnostic_variable.inputs do %>
+                            <%= diagnostic_variable.input :value, input_html: { :size => 1 } %>
+                        <% end %>
+                    <% end %>
+                  </div>
+                  <div class="span2">
+                    <%= standard.semantic_fields_for :directive do |directive| %>
+                        <%= directive.inputs do %>
+                            <%= directive.input :name, input_html: { :size => 10 } %>
+                        <% end %>
+                    <% end %>
+                  </div>
+              <% end %>
+            </div>
+        <% end %>
+    <% end %>
+    <%= f.actions do %>
+        <%= f.action :submit, :as => :button %>
+        <%= f.action :cancel, :as => :link %>
+    <% end %>
+<% end %>

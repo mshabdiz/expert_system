@@ -1,11 +1,11 @@
 class State < ActiveRecord::Base
   has_many :diagnostic_variables, as: :diagnosable, dependent: :destroy
-  has_many :diagnosed_objects, dependent: :destroy
-  has_one :directive, dependent: :destroy
-  belongs_to :expert_system
+  has_one :directive, dependent: :destroy, inverse_of: :state
+  belongs_to :expert_system, inverse_of: :standards
 
-  validates :name, :value, presence: true
-  validates :expert_system_id, presence: true
+  validates :name, :expert_system, presence: true#, :diagnostic_variables, :directive
 
-  attr_accessible :name, :value, :beef
+  accepts_nested_attributes_for :diagnostic_variables, :directive
+
+  attr_accessible :name, :diagnostic_variables_attributes, :directive_attributes
 end

@@ -1,7 +1,7 @@
 class Directive < ActiveRecord::Base
-  belongs_to :state
+  belongs_to :state, inverse_of: :directive
 
-  validates :name, :state_id, presence: true
+  validates :name, :state, presence: true
 
   attr_accessible :name
 end
